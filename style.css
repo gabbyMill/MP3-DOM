@@ -1,9 +1,13 @@
 /* Your code here  */
 body {
     text-align: center;
+    background-color: rgb(43, 122, 226);
 }
 
 li {
     list-style-type: none;
     color: black;
+}
+.playlist-element {
+    background-color: rgb(226, 43, 156);
 }

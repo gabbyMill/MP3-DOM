@@ -42,7 +42,13 @@ function playSong(songId) {
     player.songs.forEach((song) => {
         if (song.id === songId) {
             const soughtSong = document.querySelector(".song" + songId)
-            soughtSong.setAttribute("style", "background-color: rgb(0, 126, 119)")
+            if (song.duration < 421 && song.duration > 119) {
+                const color = (421 - song.duration) * (120/420)
+                soughtSong.setAttribute("style", `background-color: hsl(${color}, 100%, 25%)`)
+            } else if (song.duration < 120) {
+                soughtSong.setAttribute("style", `background-color: green`)
+            } else { soughtSong.setAttribute("style", `background-color: rgb(96, 150, 163)`)}
+            alert(`${song.title} is playing`)
         }
     })
 }
@@ -105,7 +111,7 @@ function createElement(tagName, children = [], classes = [], attributes = {}) {
     for (const attr in attributes) {
         element.setAttribute(attr, attributes[attr])
     }
-    return element
+    return element;
 }
 
 // You can write more code below this line
