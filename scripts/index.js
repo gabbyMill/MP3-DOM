@@ -43,6 +43,8 @@ function playSong(songId) {
         if (song.id === songId) {
             const soughtSong = document.querySelector(".song" + songId)
             soughtSong.setAttribute("style", "background-color: rgb(96, 150, 163)")
+            soughtSong.setAttribute("style", "cursor: pointer")
+            soughtSong.classList.add("current-song")
             alert(`${song.title} is playing`)
         }
     })

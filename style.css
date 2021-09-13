@@ -11,3 +11,6 @@ li {
 .playlist-element {
     background-color: rgb(226, 43, 156);
 }
+.current-song:hover {
+    font-size: 200%;
+}
