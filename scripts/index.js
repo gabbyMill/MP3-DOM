@@ -42,16 +42,31 @@ function playSong(songId) {
     player.songs.forEach((song) => {
         if (song.id === songId) {
             const soughtSong = document.querySelector(".song" + songId)
-            if (song.duration < 421 && song.duration > 119) {
-                const color = (421 - song.duration) * (120/420)
-                soughtSong.setAttribute("style", `background-color: hsl(${color}, 100%, 25%)`)
-            } else if (song.duration < 120) {
-                soughtSong.setAttribute("style", `background-color: green`)
-            } else { soughtSong.setAttribute("style", `background-color: rgb(96, 150, 163)`)}
+            soughtSong.setAttribute("style", "background-color: rgb(96, 150, 163)")
             alert(`${song.title} is playing`)
         }
     })
 }
+
+function setColors (songArray) {
+    for (let i = 0; i < songArray.length; i++) {
+            const soughtSong = document.querySelector(`.song${songArray[i].id}`)
+            if (songArray[i].duration < 421 && songArray[i].duration > 119) {
+                const color = (421 - songArray[i].duration) * (120/420)
+                soughtSong.setAttribute("style", `background-color: hsl(${color}, 100%, 25%)`)
+            } else if (songArray[i].duration < 120) {
+                soughtSong.setAttribute("style", `background-color: green`)
+            } else { soughtSong.setAttribute("style", `background-color: red`)}
+    }
+}
+
+
+
+// const intervalVar = setInterval(playSong, player.songs[par1].duration, par1)
+// let songIndex = 0;
+// function outerFunc () {
+//     if (songIndex === player.songs.length) return
+// }
 
 /**
  * Creates a song DOM element based on a song object.
@@ -59,7 +74,7 @@ function playSong(songId) {
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const children = []
     const classes = ["song-element"]
-    const attrs = { onclick: `playSong(${arguments[0]})` }
+    const attrs = { onclick: `playSong(${arguments[0]})`}
     const ul = document.createElement("ul")
     const image = document.createElement("img")
     image.src = arguments[5]
@@ -151,3 +166,4 @@ function appendToPlaylistsDiv() {
     })
 }
 appendToPlaylistsDiv()
+setColors(player.songs)
