@@ -45,8 +45,15 @@ function durationConverter(time) {
 //     setTimeout(playSong, duration, arrayOfIds[index])
 //     index++
 // }
+// let index = 0
+// function engulfingFunction (songId, duration) {
+//     index = arrayOfIds.indexOf(songId)
+//     const doesSomething = setTimeout(playSong,duration*1000, songId)
+// }
 
 function playSong(songId) {
+    // get out of function if it has played all songs:
+    // if (index === 7) return
     // make sure it can only be playing 1 at a time:
     const resetSongs = document.querySelectorAll(".song-element")
     resetSongs.forEach((song) => {
@@ -61,6 +68,8 @@ function playSong(songId) {
             alert(`${song.title} is playing`)
         }
     })
+    // index++
+    // clearInterval(doesSomething)
 }
 
 function setColors (songArray) {
@@ -80,18 +89,24 @@ function setColors (songArray) {
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const children = []
     const classes = ["song-element"]
-    const attrs = { onclick: `playSong(${arguments[0]})`}
+    const attrs = { onclick: `playSong(${id})`}
     const ul = document.createElement("ul")
     const image = document.createElement("img")
-    image.src = arguments[5]
+    image.src = coverArt
     image.alt = 'cover-photo'
-    for (let i = 1; i < arguments.length - 1; i++) {
-        if (i === 4) {
-            arguments[4] = durationConverter(arguments[4])
+    for (let key in arguments[0]) {
+        if (key === 'id' || key === 'coverArt') {
+            continue
         }
+        if (key === 'duration') {
+            const li = document.createElement("li")
+            li.innerText = durationConverter(arguments[0][key])
+            ul.append(li)
+        } else {
         const li = document.createElement("li")
-        li.innerText = arguments[i]
+        li.innerText = arguments[0][key]
         ul.append(li)
+        }
     }
     ul.appendChild(image)
     children.push(ul)
@@ -156,9 +171,8 @@ document.body.insertBefore(playlistHeader, playlists)
 
 function appendToSongsDiv() {
     player.songs.forEach((song) => {
-        const { id, title, album, artist, duration, coverArt } = song
-        const newSong = createSongElement(id, title, album, artist, duration, coverArt)
-        newSong.classList.add("song" + id)
+        const newSong = createSongElement(song)
+        newSong.classList.add("song" + song.id)
         songs.append(newSong)
     })
 }
