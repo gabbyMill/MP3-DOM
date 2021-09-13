@@ -61,15 +61,6 @@ function setColors (songArray) {
             } else { soughtSong.setAttribute("style", `background-color: red`)}
     }
 }
-
-
-
-// const intervalVar = setInterval(playSong, player.songs[par1].duration, par1)
-// let songIndex = 0;
-// function outerFunc () {
-//     if (songIndex === player.songs.length) return
-// }
-
 /**
  * Creates a song DOM element based on a song object.
  */
@@ -80,6 +71,7 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const ul = document.createElement("ul")
     const image = document.createElement("img")
     image.src = arguments[5]
+    image.alt = 'cover-photo'
     for (let i = 1; i < arguments.length - 1; i++) {
         if (i === 4) {
             arguments[4] = durationConverter(arguments[4])
@@ -96,8 +88,9 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
+    id = arguments[0]
     const children = []
-    const classes = ["playlist-element"]
+    const classes = [arguments[1] + '-playlist']
     const attrs = { id }
     const ul = document.createElement("ul")
     for (let i = 1; i < arguments.length; i++) {
@@ -168,4 +161,6 @@ function appendToPlaylistsDiv() {
     })
 }
 appendToPlaylistsDiv()
+
+// paint songs on load:
 setColors(player.songs)
