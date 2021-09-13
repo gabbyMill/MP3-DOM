@@ -33,6 +33,19 @@ function durationConverter(time) {
  * @param {String} songId - the ID of the song to play
  */
 
+// ..psuedo :
+// replace playSong with setTimeout (playSong, songDuration that matches id)
+// at the end of playSong function increment index++
+// keep index like this:
+// setTimeout(func, 2500, par1, par2)
+// let tempId = null
+// const arrayOfIds = [4,5,7,6,3,2,1]
+// function testFunc (duration, id) {
+//    id
+//     setTimeout(playSong, duration, arrayOfIds[index])
+//     index++
+// }
+
 function playSong(songId) {
     // make sure it can only be playing 1 at a time:
     const resetSongs = document.querySelectorAll(".song-element")
@@ -88,14 +101,15 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
-    id = arguments[0]
+    // const newId = arguments[0]
+    // console.log(arguments[0]);
     const children = []
-    const classes = [arguments[1] + '-playlist']
+    const classes = [name + '-playlist']
     const attrs = { id }
     const ul = document.createElement("ul")
-    for (let i = 1; i < arguments.length; i++) {
+    for (let key in arguments[0]) {
         const li = document.createElement("li")
-        li.innerText = arguments[i]
+        li.innerText = arguments[0][key]
         ul.append(li)
     }
     children.push(ul)
@@ -152,11 +166,10 @@ appendToSongsDiv()
 
 function appendToPlaylistsDiv() {
     player.playlists.forEach((playlist) => {
-        const { id, name, songs } = playlist
-        const newPlaylist = createPlaylistElement(id, name, songs)
+        const newPlaylist = createPlaylistElement(playlist)
         playlists.append(newPlaylist)
         const playListTime = document.createElement("li")
-        playListTime.innerText = durationConverter(playlistDuration(id))
+        playListTime.innerText = durationConverter(playlistDuration(playlist.id))
         newPlaylist.append(playListTime)
     })
 }
