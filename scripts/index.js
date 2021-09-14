@@ -165,6 +165,9 @@ const songHeader = document.createElement("h2")
 songHeader.innerText = `Songs`
 siteHeader.append(headerContent, songHeader)
 document.body.insertBefore(siteHeader, songs)
+const timeLeft = document.createElement('h3')
+timeLeft.innerText = 'Time Left will be displayed here'
+document.body.insertBefore(timeLeft, songs)
 const playlistHeader = document.createElement("h2")
 playlistHeader.innerText = `Playlists:`
 document.body.insertBefore(playlistHeader, playlists)
