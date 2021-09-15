@@ -14,9 +14,9 @@ li {
 .current-song {
     background-color: blueviolet;
 }
-.current-song:hover {
+/* .current-song:hover {
     font-size: 140%;
-}
+} */
 
 .song-element, #playlists{
     border-radius: 30px;
@@ -40,6 +40,12 @@ img {
     width: 60%;
 }
 
+/* this is the duration. plz add a class to it later and don't mention all h3 */
 h3 {
     position: fixed;
+    max-width: 10%;
+}
+
+.song-element:hover {
+    font-size: 140%;
 }

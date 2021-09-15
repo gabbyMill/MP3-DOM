@@ -6,6 +6,7 @@
  */
 function playSong(songId) {
     // Your code here
+    console.log(`song is playing`);
 }
 
 /**
@@ -13,9 +14,37 @@ function playSong(songId) {
  *
  * @param {Number} songId - the ID of the song to remove
  */
-function removeSong(songId) {
-    // Your code here
+function removeSong(event) {
+    // locate the div in which the click was made:
+    const songDiv = event.target.closest('.song-element');
+
+    const removeButton = event.target.closest('.remove-button');
+
+    if (!removeButton) return // if this is not the remove button get outta dodge;
+    // if you got to this line then the user clicked on a remove button button;
+    songDiv.remove();
 }
+// adding an event listener to call removeSong function:
+document.addEventListener('click', eventHandler);
+// this next line shouldn't be? it should all be called in 1 class
+// with a constructor?
+
+/* document.addEventListener('click', removeSong); */
+
+// My idea is to substitute this with calling a helper function
+// the helper function will contain something like this:
+// if (removeButton) {removeSong()}
+// if (playButton) {playSong()}
+// alternative will be to use methods and dataset and class methods.
+function eventHandler (event) {
+    const removeButton = event.target.closest('.remove-button');
+    const playButton = event.target.closest('.play-button');
+    const addButton = event.target.closest('.add-button') // later will add this
+
+    if (removeButton)  return removeSong(event)
+    if (playButton)  return playSong(event)
+}
+
 
 /**
  * Adds a song to the player, and updates the DOM to match.
@@ -101,4 +130,6 @@ generateSongs()
 generatePlaylists()
 
 // Making the add-song-button actually do something
-document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
+
+// commenting this out for now:
+// document.getElementById("add-button").addEventListener("click", handleAddSongEvent)

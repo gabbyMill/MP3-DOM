@@ -51,10 +51,7 @@ function durationConverter(time) {
 //     const doesSomething = setTimeout(playSong,duration*1000, songId)
 // }
 
-function playSong(songId) {
-    // get out of function if it has played all songs:
-    // if (index === 7) return
-    // make sure it can only be playing 1 at a time:
+function oldPlaySong(songId) {
     const resetSongs = document.querySelectorAll(".song-element")
     resetSongs.forEach((song) => {
         song.setAttribute("style", "background-color: rgb(118, 201, 204)")
@@ -89,9 +86,13 @@ function setColors (songArray) {
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const children = []
     const classes = ["song-element"]
-    const attrs = { onclick: `playSong(${id})`}
+    const attrs = {onclick: 'console.log("this is an old functionality within createSongElement func located index.js")' } // onclick: `playSong(${id})` 
     const ul = document.createElement("ul")
     const image = document.createElement("img")
+    const playButton = document.createElement('button')
+    playButton.classList.add('play-button')
+    const removeButton = document.createElement('button')
+    removeButton.classList.add('remove-button')
     image.src = coverArt
     image.alt = 'cover-photo'
     for (let key in arguments[0]) {
@@ -109,6 +110,8 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
         }
     }
     ul.appendChild(image)
+    ul.append(playButton)
+    ul.append(removeButton)
     children.push(ul)
     return createElement("div", children, classes, attrs)
 }
