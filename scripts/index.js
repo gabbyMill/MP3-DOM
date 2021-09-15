@@ -51,13 +51,13 @@ function durationConverter(time) {
 //     const doesSomething = setTimeout(playSong,duration*1000, songId)
 // }
 
-function oldPlaySong(songId) {
+function originalPlaySong(songId) {
     const resetSongs = document.querySelectorAll(".song-element")
     resetSongs.forEach((song) => {
         song.setAttribute("style", "background-color: rgb(118, 201, 204)")
     })
     player.songs.forEach((song) => {
-        if (song.id === songId) {
+        if (song.id == songId) {
             const soughtSong = document.querySelector(".song" + songId)
             soughtSong.setAttribute("style", "background-color: rgb(96, 150, 163)")
             soughtSong.setAttribute("style", "cursor: pointer")
@@ -90,9 +90,11 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const ul = document.createElement("ul")
     const image = document.createElement("img")
     const playButton = document.createElement('button')
-    playButton.classList.add('play-button')
+    playButton.classList.add('play-button', 'play-button' + id)
+    playButton.append('Play')
     const removeButton = document.createElement('button')
-    removeButton.classList.add('remove-button')
+    removeButton.classList.add('remove-button', 'remove-button' + id)
+    removeButton.append('Remove')
     image.src = coverArt
     image.alt = 'cover-photo'
     for (let key in arguments[0]) {

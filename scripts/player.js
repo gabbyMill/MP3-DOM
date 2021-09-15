@@ -29,7 +29,7 @@ const player = {
             title: "Thunderstruck",
             album: "The Razors Edge",
             artist: "AC/DC",
-            duration: 5,
+            duration: 292,
             coverArt: "./images/cover_art/acdc_thunderstruck.jpg",
         },
         {
