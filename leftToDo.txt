@@ -1,0 +1,9 @@
+each song is generated an id so it can be played and removed.
+event listeners inside createElemtn functions, createSongElemnt...
+
+Time Displayed, bonus.
+Double playlists, songs header.
+
+bonus: added songs will remain sorted by title. for this you need to sort the elements in appndToSongsDiv and not sort the existing hardcoded player object.
+
+if songs will first be added to player then appended to songs it will be better

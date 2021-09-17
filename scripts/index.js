@@ -103,7 +103,11 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
         }
         if (key === 'duration') {
             const li = document.createElement("li")
-            li.innerText = durationConverter(arguments[0][key])
+            if (!String(arguments[0][key]).includes(':')) {
+                li.innerText = durationConverter(arguments[0][key])
+            } else {
+                li.innerText = arguments[0][key]
+            }
             ul.append(li)
         } else {
         const li = document.createElement("li")
@@ -128,9 +132,15 @@ function createPlaylistElement({ id, name, songs }) {
     const attrs = { id }
     const ul = document.createElement("ul")
     for (let key in arguments[0]) {
-        const li = document.createElement("li")
-        li.innerText = arguments[0][key]
-        ul.append(li)
+        if (key === 'songs') {
+            const li = document.createElement("li")
+            li.innerText = arguments[0][key].length + ' songs'
+            ul.append(li)
+        } else {
+            const li = document.createElement("li")
+            li.innerText = arguments[0][key]
+            ul.append(li)
+        }
     }
     children.push(ul)
     return createElement("div", children, classes, attrs)
@@ -167,14 +177,14 @@ const siteHeader = document.createElement("header")
 const headerContent = document.createElement("h1")
 headerContent.innerText = `Gabby's MP3 Player`
 const songHeader = document.createElement("h2")
-songHeader.innerText = `Songs`
+// songHeader.innerText = `Songs`
 siteHeader.append(headerContent, songHeader)
 document.body.insertBefore(siteHeader, songs)
 const timeLeft = document.createElement('h3')
 timeLeft.innerText = 'Time Left will be displayed here'
 document.body.insertBefore(timeLeft, songs)
 const playlistHeader = document.createElement("h2")
-playlistHeader.innerText = `Playlists:`
+// playlistHeader.innerText = `Playlists:`
 document.body.insertBefore(playlistHeader, playlists)
 
 // sort songs and playlists using chained ternary
@@ -183,18 +193,22 @@ function sortSongsAndPlaylists () {
     player.playlists.sort((a, b) => (a.name > b.name ? 1 : a.name === b.name ? 0 : -1))
 }
 
+
 function appendToSongsDiv() {
+    songs.innerText = ''
     sortSongsAndPlaylists();
     player.songs.forEach((song) => {
         const newSong = createSongElement(song)
         newSong.classList.add("song" + song.id)
         songs.append(newSong)
     })
+    // paint songs on load:
+    setColors(player.songs)
 }
 appendToSongsDiv()
 
 function appendToPlaylistsDiv() {
-    sortSongsAndPlaylists();
+    
     player.playlists.forEach((playlist) => {
         const newPlaylist = createPlaylistElement(playlist)
         playlists.append(newPlaylist)
@@ -205,5 +219,5 @@ function appendToPlaylistsDiv() {
 }
 appendToPlaylistsDiv()
 
-// paint songs on load:
-setColors(player.songs)
+
+

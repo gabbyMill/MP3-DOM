@@ -9,7 +9,6 @@ document.addEventListener('click', handleSongClickEvent);
  */
 function playSong(songId) {
     // Your code here
-    console.log(`song is playing`);
 }
 
 /**
@@ -21,15 +20,34 @@ function removeSong(id) {
     document.querySelector('.song' + id).remove()
 }
 
+function generateNewId () {
+    const arrayOfSongs = document.querySelectorAll('.song-element');
+    const arrayOfIds = [];
+
+    for (let song of arrayOfSongs) {
+        arrayOfIds.push(song.className[song.className.length-1])
+        if (arrayOfIds.length > 9) {
+            arrayOfIds.push((String(arrayOfIds.length)[0] * 10) + 
+            Number(song.className[song.className.length-1]))
+        }
+        
+    }
+    const newId = Math.max(...arrayOfIds) + 1;
+    return newId
+}
 /**
  * Adds a song to the player, and updates the DOM to match.
  */
-function addSong({ title, album, artist, duration, coverArt }) {
-    // Your code here
+function addSong({id, title, album, artist, duration, coverArt }) {
     const newSong = createSongElement(arguments[0]);
-    songs.append(newSong)
-    // sortSongsAndPlaylists() // just want to see how this looks without
+    newSong.classList.add('song' + id)
+    // try calling the function each time, this way maybe it will reamin sorted.
 
+    appendToSongsDiv();
+
+
+    // appendToSongsDiv() // this re appends everything.
+    // why is color off ?
 }
 
 /**
@@ -45,16 +63,14 @@ function handleSongClickEvent(event) {
 
     if (removeButton)  {
         // this next line takes the id of the song:
-        const id = removeButton.className[removeButton.className.length-1];
+        const id = removeButton.className.match(/(\d+)/)[0];
         return removeSong(id)
     }
     if (playButton)  {
-        const id = playButton.className[playButton.className.length-1];
+        const id = playButton.className.match(/(\d+)/)[0];
         return originalPlaySong(id)
     }
 }
-
-document.addEventListener('click', handleAddSongEvent)
 
 /**
  * Handles a click event on the button that adds songs.
@@ -62,23 +78,32 @@ document.addEventListener('click', handleAddSongEvent)
  * @param {MouseEvent} event - the click event
  */
 function handleAddSongEvent(event) {
-    // Your code here
-    const addBtn = event.target.closest('#add-button')
-    if (!addBtn) return; // Get outa here if this isn't add button;
+    // // Your code here
+    // const addBtn = event.target.closest('#add-button')
+    // if (!addBtn) return; // Get outa here if this isn't add button;
 
     const arrayOfInputs = document.querySelectorAll('input')
     const songObject = {
+        id: generateNewId(),
         title: arrayOfInputs[0].value,
         album: arrayOfInputs[1].value,
         artist: arrayOfInputs[2].value,
-        duration: Number(arrayOfInputs[3].value),
+        duration: arrayOfInputs[3].value,
         coverArt: arrayOfInputs[4].value
     }
     for (let i = 0; i < arrayOfInputs.length; i++) {
         if (arrayOfInputs[i].value === '') {
             throw alert(arrayOfInputs[i].placeholder + ` can't be an empty input`)
         }
+        if (!arrayOfInputs[3].value.includes(':')) {
+            throw alert('Invlid time format')
+        }
     }
+    // push the song into the player object
+    // then it is easy to sort them by their names
+    player.songs.push(songObject)
+    // making sure the song is painted in correlation with its duration
+    player.songs[player.songs.length-1].duration = durationConverter(arrayOfInputs[3].value)
     addSong(songObject)
 }
 
@@ -140,5 +165,4 @@ generateSongs()
 generatePlaylists()
 
 // Making the add-song-button actually do something
-// commenting this out for now:
-// document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
+document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
