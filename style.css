@@ -49,3 +49,8 @@ h3 {
 .song-element:hover {
     font-size: 140%;
 }
+
+button {
+    display: flex;
+    font-size: 200%;
+}

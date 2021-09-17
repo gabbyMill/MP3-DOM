@@ -91,10 +91,10 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const image = document.createElement("img")
     const playButton = document.createElement('button')
     playButton.classList.add('play-button', 'play-button' + id)
-    playButton.append('Play')
+    playButton.append('🎶')
     const removeButton = document.createElement('button')
     removeButton.classList.add('remove-button', 'remove-button' + id)
-    removeButton.append('Remove')
+    removeButton.append('❌')
     image.src = coverArt
     image.alt = 'cover-photo'
     for (let key in arguments[0]) {
@@ -177,7 +177,14 @@ const playlistHeader = document.createElement("h2")
 playlistHeader.innerText = `Playlists:`
 document.body.insertBefore(playlistHeader, playlists)
 
+// sort songs and playlists using chained ternary
+function sortSongsAndPlaylists () {
+    player.songs.sort((a, b) => (a.title > b.title ? 1 : a.title === b.title ? 0 : -1))
+    player.playlists.sort((a, b) => (a.name > b.name ? 1 : a.name === b.name ? 0 : -1))
+}
+
 function appendToSongsDiv() {
+    sortSongsAndPlaylists();
     player.songs.forEach((song) => {
         const newSong = createSongElement(song)
         newSong.classList.add("song" + song.id)
@@ -187,6 +194,7 @@ function appendToSongsDiv() {
 appendToSongsDiv()
 
 function appendToPlaylistsDiv() {
+    sortSongsAndPlaylists();
     player.playlists.forEach((playlist) => {
         const newPlaylist = createPlaylistElement(playlist)
         playlists.append(newPlaylist)

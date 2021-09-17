@@ -1,5 +1,6 @@
 // adding an event listener to call other functions:
-document.addEventListener('click', eventHandler);
+document.addEventListener('click', handleSongClickEvent);
+
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -20,7 +21,24 @@ function removeSong(id) {
     document.querySelector('.song' + id).remove()
 }
 
-function eventHandler (event) {
+/**
+ * Adds a song to the player, and updates the DOM to match.
+ */
+function addSong({ title, album, artist, duration, coverArt }) {
+    // Your code here
+    const newSong = createSongElement(arguments[0]);
+    songs.append(newSong)
+    // sortSongsAndPlaylists() // just want to see how this looks without
+
+}
+
+/**
+ * Acts on a click event on an element inside the songs list.
+ * Should handle clicks on play buttons and remove buttons of songs.
+ *
+ * @param {MouseEvent} event - the click event
+ */
+function handleSongClickEvent(event) {
     const removeButton = event.target.closest('.remove-button');
     const playButton = event.target.closest('.play-button');
     const addButton = event.target.closest('.add-button') // later will add this
@@ -32,27 +50,11 @@ function eventHandler (event) {
     }
     if (playButton)  {
         const id = playButton.className[playButton.className.length-1];
-        return oldPlaySong(id)
+        return originalPlaySong(id)
     }
 }
 
-
-/**
- * Adds a song to the player, and updates the DOM to match.
- */
-function addSong({ title, album, artist, duration, coverArt }) {
-    // Your code here
-}
-
-/**
- * Acts on a click event on an element inside the songs list.
- * Should handle clicks on play buttons and remove buttons of songs.
- *
- * @param {MouseEvent} event - the click event
- */
-function handleSongClickEvent(event) {
-    // Your code here
-}
+document.addEventListener('click', handleAddSongEvent)
 
 /**
  * Handles a click event on the button that adds songs.
@@ -61,12 +63,29 @@ function handleSongClickEvent(event) {
  */
 function handleAddSongEvent(event) {
     // Your code here
+    const addBtn = event.target.closest('#add-button')
+    if (!addBtn) return; // Get outa here if this isn't add button;
+
+    const arrayOfInputs = document.querySelectorAll('input')
+    const songObject = {
+        title: arrayOfInputs[0].value,
+        album: arrayOfInputs[1].value,
+        artist: arrayOfInputs[2].value,
+        duration: Number(arrayOfInputs[3].value),
+        coverArt: arrayOfInputs[4].value
+    }
+    for (let i = 0; i < arrayOfInputs.length; i++) {
+        if (arrayOfInputs[i].value === '') {
+            throw alert(arrayOfInputs[i].placeholder + ` can't be an empty input`)
+        }
+    }
+    addSong(songObject)
 }
 
 /**
  * Creates a song DOM element based on a song object.
  */
-function createSongElement({ id, title, album, artist, duration, coverArt }) {
+function createSongElement2({ id, title, album, artist, duration, coverArt }) {
     const children = []
     const classes = []
     const attrs = {}
@@ -121,6 +140,5 @@ generateSongs()
 generatePlaylists()
 
 // Making the add-song-button actually do something
-
 // commenting this out for now:
 // document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
