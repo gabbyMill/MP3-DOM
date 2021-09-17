@@ -18,6 +18,17 @@ function playSong(songId) {
  */
 function removeSong(id) {
     document.querySelector('.song' + id).remove()
+    for (let i = 0; i < player.playlists.length; i++) {
+        if (player.playlists[i].songs.includes(+id)) {
+            player.playlists[i].songs.splice(
+                player.playlists[i].songs.indexOf(+id), 1
+            )
+        }
+        if (player.playlists[i].songs.length < 1) {
+            delete player.playlists[i]
+        }
+    }
+    appendToPlaylistsDiv()
 }
 
 function generateNewId () {

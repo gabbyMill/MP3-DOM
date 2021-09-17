@@ -3,6 +3,7 @@ function playlistDuration(id) {
     const playlists = player.playlists
     playlists.forEach((playlist) => {
         if (playlist.id === id) {
+            if (!playlist.songs) return;
             playlist.songs.forEach((songNumber) => {
                 player.songs.forEach((song) => {
                     // finds songs that match the numbers in the array 'songs' of playlist object
@@ -132,6 +133,7 @@ function createPlaylistElement({ id, name, songs }) {
     const attrs = { id }
     const ul = document.createElement("ul")
     for (let key in arguments[0]) {
+        if (key === 'id') { continue }
         if (key === 'songs') {
             const li = document.createElement("li")
             li.innerText = arguments[0][key].length + ' songs'
@@ -208,7 +210,8 @@ function appendToSongsDiv() {
 appendToSongsDiv()
 
 function appendToPlaylistsDiv() {
-    
+    playlists.innerText = ''
+    sortSongsAndPlaylists()
     player.playlists.forEach((playlist) => {
         const newPlaylist = createPlaylistElement(playlist)
         playlists.append(newPlaylist)
