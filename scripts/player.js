@@ -53,7 +53,7 @@ const player = {
             title: "Sons of Winter and Stars",
             album: "Time I",
             artist: "Wintersun",
-            duration: 811,
+            duration: 300,
             coverArt: "./images/cover_art/wintersun_sons_of_winter_and_stars.jpg",
         },
     ],

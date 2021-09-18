@@ -63,7 +63,7 @@ function originalPlaySong(songId) {
             soughtSong.setAttribute("style", "background-color: rgb(96, 150, 163)")
             soughtSong.setAttribute("style", "cursor: pointer")
             soughtSong.classList.add("current-song")
-            alert(`${song.title} is playing`)
+            console.log(`${song.title} is playing`);
         }
     })
     // index++
@@ -87,15 +87,15 @@ function setColors (songArray) {
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const children = []
     const classes = ["song-element"]
-    const attrs = {onclick: 'console.log("this is an old functionality within createSongElement func located index.js")' } // onclick: `playSong(${id})` 
+    const attrs = {} // onclick: `playSong(${id})` this was once here 
     const ul = document.createElement("ul")
     const image = document.createElement("img")
     const playButton = document.createElement('button')
     playButton.classList.add('play-button', 'play-button' + id)
-    playButton.append('🎶')
+    playButton.append('⏯')
     const removeButton = document.createElement('button')
     removeButton.classList.add('remove-button', 'remove-button' + id)
-    removeButton.append('❌')
+    removeButton.append('✖️')
     image.src = coverArt
     image.alt = 'cover-photo'
     for (let key in arguments[0]) {
@@ -117,8 +117,8 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
         }
     }
     ul.appendChild(image)
-    ul.append(playButton)
-    ul.append(removeButton)
+    const divOfButtons = createElement('div', [playButton, removeButton], ['button-container'])
+    ul.append(divOfButtons)
     children.push(ul)
     return createElement("div", children, classes, attrs)
 }
@@ -182,9 +182,8 @@ const songHeader = document.createElement("h2")
 // songHeader.innerText = `Songs`
 siteHeader.append(headerContent, songHeader)
 document.body.insertBefore(siteHeader, songs)
-const timeLeft = document.createElement('h3')
-timeLeft.innerText = 'Time Left will be displayed here'
-document.body.insertBefore(timeLeft, songs)
+document.body.insertBefore(makeProgressBar(), songs)
+
 const playlistHeader = document.createElement("h2")
 // playlistHeader.innerText = `Playlists:`
 document.body.insertBefore(playlistHeader, playlists)
@@ -202,6 +201,7 @@ function appendToSongsDiv() {
     player.songs.forEach((song) => {
         const newSong = createSongElement(song)
         newSong.classList.add("song" + song.id)
+        // newSong.append(makeProgressBar())
         songs.append(newSong)
     })
     // paint songs on load:
@@ -221,6 +221,7 @@ function appendToPlaylistsDiv() {
     })
 }
 appendToPlaylistsDiv()
+
 
 
 

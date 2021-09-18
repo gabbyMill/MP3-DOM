@@ -1,4 +1,35 @@
 /* Your code here  */
+#songs {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 100px;
+    justify-content: space-around;
+}
+
+.song-element {
+    display: flex;
+    flex-basis: 20%;
+}
+.song-element:hover {
+    color: red;
+}
+.song-element, #playlists{
+    border-radius: 30px;
+    box-shadow: 5px 10px;
+    margin: 20px;
+}
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+.remove-button, .play-button {
+    background-color: black;
+}
+.play-button {
+    background-color: mediumslateblue;
+}
+
 body {
     text-align: center;
     background-color: rgb(43, 122, 226);
@@ -14,43 +45,36 @@ li {
 .current-song {
     background-color: blueviolet;
 }
-/* .current-song:hover {
-    font-size: 140%;
-} */
-
-.song-element, #playlists{
-    border-radius: 30px;
-    box-shadow: 5px 10px;
-    margin: 20px;
-}
-
-.song-element {
-    display: flex;
-    justify-content: center;
-    width: 50%;
-}
-
-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 img {
     width: 60%;
 }
 
-/* this is the duration. plz add a class to it later and don't mention all h3 */
-h3 {
-    position: fixed;
-    max-width: 10%;
-}
-
-.song-element:hover {
-    font-size: 140%;
-}
-
 button {
-    display: flex;
-    font-size: 200%;
+    /* display: flex; */
+    font-size: 150%;
+    
 }
+
+
+.myProgress {
+    width: 100%;
+    background-color: grey;
+    position: sticky;
+    top: 0;
+
+  }
+  
+.myBar {
+    width: 1%;
+    height: 30px;
+    background-color: red;
+  }
+
+  .click-to-add:hover {
+    cursor: pointer;
+  }
+
+  #inputs, #add-button {
+      visibility: hidden;
+  }

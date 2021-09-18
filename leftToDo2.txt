@@ -1,0 +1,8 @@
+Buttons Delete garbage can and play button, background should be same color.
+Add a new song should be button that drops down inputs.
+
+If you want to change location of progress bar you should take it out of append div function.
+need to fix generateId function.
+
+// there is a bug
+after you delete songs when you add a new song it reupdates all the original songs

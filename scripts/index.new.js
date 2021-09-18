@@ -1,6 +1,11 @@
 // adding an event listener to call other functions:
 document.addEventListener('click', handleSongClickEvent);
 
+// code to help automatically play next song
+// const arrayOfSongIds = [4, 5, 7, 6, 3, 2, 1];
+// let index;
+// let interval2;
+
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -18,7 +23,16 @@ function playSong(songId) {
  */
 function removeSong(id) {
     document.querySelector('.song' + id).remove()
+    // this makes sure they aren't re-added when you add a newSong
+    for (let i = 0; i < player.songs.length; i++) {
+        if (player.songs[i].id == id) {
+            player.songs.splice(i, 1)
+        }
+    }
     for (let i = 0; i < player.playlists.length; i++) {
+        // if the playlisted is deleted jump to the next
+        // one/ get out of the loop
+        if (!player.playlists[i]) continue
         if (player.playlists[i].songs.includes(+id)) {
             player.playlists[i].songs.splice(
                 player.playlists[i].songs.indexOf(+id), 1
@@ -41,6 +55,8 @@ function generateNewId () {
             arrayOfIds.push((String(arrayOfIds.length)[0] * 10) + 
             Number(song.className[song.className.length-1]))
         }
+        // match(/(\d+)/)[0] use this.
+        // reference in line 80
         
     }
     const newId = Math.max(...arrayOfIds) + 1;
@@ -79,7 +95,10 @@ function handleSongClickEvent(event) {
     }
     if (playButton)  {
         const id = playButton.className.match(/(\d+)/)[0];
-        return originalPlaySong(id)
+        // console.log(id);
+        // index = arrayOfSongIds.indexOf(+id)
+        // interval2 = setInterval(activateSong, 1000*getSongDuration(id), id)
+        return activateSong(id)
     }
 }
 
@@ -89,10 +108,6 @@ function handleSongClickEvent(event) {
  * @param {MouseEvent} event - the click event
  */
 function handleAddSongEvent(event) {
-    // // Your code here
-    // const addBtn = event.target.closest('#add-button')
-    // if (!addBtn) return; // Get outa here if this isn't add button;
-
     const arrayOfInputs = document.querySelectorAll('input')
     const songObject = {
         id: generateNewId(),
@@ -107,7 +122,7 @@ function handleAddSongEvent(event) {
             throw alert(arrayOfInputs[i].placeholder + ` can't be an empty input`)
         }
         if (!arrayOfInputs[3].value.includes(':')) {
-            throw alert('Invlid time format')
+            throw alert('Invalid time format')
         }
     }
     // push the song into the player object
@@ -177,3 +192,122 @@ generatePlaylists()
 
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
+
+function makeProgressBar () {
+    const myProgress = document.createElement('div');
+    const myBar = document.createElement('div');
+    myProgress.setAttribute("class", "myProgress");
+    myBar.setAttribute("class", "myBar");
+    myProgress.append(myBar);
+    return myProgress
+}
+
+// let tempVar;
+// const setToZero = () => tempVar = 0;
+// const timeoutSetToZero = setTimeout(setToZero, 1000 * duration) // makes
+// sure only one song can be in the progress
+// bar at a time.
+function activateSong(id) {
+    
+    originalPlaySong(id) // keep old playsong alive still
+    
+    const duration = getSongDuration(id)
+
+    // arrayOfSongIds.splice(index, 1) // this line only relevant for timeout
+    // id = arrayOfSongIds[index] // this line only relevant for timeout
+
+    let tempVar = 0;
+
+
+    function progress () {
+    if (tempVar == 0) { 
+        tempVar = 1;
+        const myBar = document.querySelector(".myBar");
+        if (!myBar.getAttribute("style")) {
+            
+        }
+        else {
+            document.querySelector('.myBar').remove()
+            document.body.insertBefore(makeProgressBar(), songs)
+        }
+        let width = 1;
+        const interval = setInterval(frame, 10*duration); // progress slowly incrementing
+        function frame() {
+        if (width >= 100) { // (if bar is full) stop the function and reset the bar to empty
+            clearInterval(interval);
+            tempVar = 0;
+        } else {
+            width++;
+            myBar.style.width = width + "%";
+        }
+        }
+    }
+    }
+    progress()
+    // if (!arrayOfSongIds[index]) { // this line only relevant for timeout
+    //     console.log('This is the clear interval');
+    //     clearTimeout(interval2)
+    // }
+}
+
+function getSongDuration (id) {
+    let duration;
+    player.songs.forEach(song => {
+        if (song.id == id) {
+            duration = song.duration
+        }
+    })
+    return duration
+}
+
+// there is a current-song class FYI
+// maybe keep a global variable named duration/songDuration
+// 
+// psuedo for bonus:
+// when you click a song an interval is called with the songs duration
+// something like: const interval = setInterval(activateSong, getSongDuration(id), id)
+
+// BOTTOM LINE THE 2 IMPORTANT THINGS TO DO AT END OF
+// ACTIVATESONG FUNCTION ARE
+// 1.SPLICE(INDEX, 1)
+// 2. ID = ARRAYOFSONGS[INDEX]
+// 3. BEFORE SPLICE PUT:
+// if (!arrayOfIds[index]) clearInterval(interval)
+// this will make sure it stops when it gets to the end
+
+// const arrayOfSongIds = [4, 5, 7, 6, 3, 2, 1];
+// let index; // let's say id is 7
+
+// put this code inside handleSongClickEvent:
+// index = arrayOfSongs.indexOf(id) // in that case index is 2
+// at the bottom of the function (after the splice!) this will go:
+// id = arrayOfSongs[index]
+
+
+// there will be a global variable (sorted by order)
+// arrayOfSongIds: e.g [4, 5, 7, 6, 3, 2, 1]
+// each time at the end of this function it will:
+// arrayOfSongIds.splice(index, 1) // eliminate song from array
+// this way you don't have to increment index 
+// if you eliminate 7 at index 2 now 6 is the song you want 
+// at index 2
+
+// make sure to keep index and arrayOfSongIds global vars
+
+// id = 7
+// arrayOfSongIds = [4, 5, 7, 6, 3, 2, 1]
+// let index = arrayOfSongIds.indexOf(id)
+
+document.querySelector('.click-to-add').addEventListener('click', showInputs)
+function showInputs () {
+    const inputDiv = document.querySelector('#inputs')
+    const addButton = document.querySelector('#add-button')
+    if (inputDiv.style.visibility === 'hidden' || (!inputDiv.getAttribute("style"))) {
+        inputDiv.style.visibility = 'visible'
+        addButton.style.visibility = 'visible'
+    } else {
+        inputDiv.style.visibility = 'hidden'
+        addButton.style.visibility = 'hidden'
+    }
+    
+}
