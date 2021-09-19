@@ -5,7 +5,7 @@ const player = {
             title: "Vortex",
             album: "Wallflowers",
             artist: "Jinjer",
-            duration: 3,
+            duration: 242,
             coverArt: "./images/cover_art/jinjer_vortex.jpg",
         },
         {
@@ -13,7 +13,7 @@ const player = {
             title: "Vinda",
             album: "Godtfolk",
             artist: "Songleikr",
-            duration: 5,
+            duration: 160,
             coverArt: "./images/cover_art/songleikr_vinda.jpg",
         },
         {
@@ -21,7 +21,7 @@ const player = {
             title: "Shiroyama",
             album: "The Last Stand",
             artist: "Sabaton",
-            duration: 4,
+            duration: 213,
             coverArt: "./images/cover_art/sabaton_shiroyama.jpg",
         },
         {
@@ -29,7 +29,7 @@ const player = {
             title: "Thunderstruck",
             album: "The Razors Edge",
             artist: "AC/DC",
-            duration: 6,
+            duration: 292,
             coverArt: "./images/cover_art/acdc_thunderstruck.jpg",
         },
         {
@@ -37,7 +37,7 @@ const player = {
             title: "All is One",
             album: "All is One",
             artist: "Orphaned Land",
-            duration: 2,
+            duration: 270,
             coverArt: "./images/cover_art/orphaned_land_all_is_one.jpg",
         },
         {
@@ -45,7 +45,7 @@ const player = {
             title: "As a Stone",
             album: "Show Us What You Got",
             artist: "Full Trunk",
-            duration: 3,
+            duration: 259,
             coverArt: "./images/cover_art/full_trunk_as_a_stone.jpg",
         },
         {
@@ -53,7 +53,7 @@ const player = {
             title: "Sons of Winter and Stars",
             album: "Time I",
             artist: "Wintersun",
-            duration: 7,
+            duration: 811,
             coverArt: "./images/cover_art/wintersun_sons_of_winter_and_stars.jpg",
         },
     ],
