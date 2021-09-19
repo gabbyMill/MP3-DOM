@@ -209,6 +209,8 @@ function activateSong(id) {
     progress()
     if (getNextId(id)) {
         const timeoutInterval = setTimeout(activateSong, duration*1000, getNextId(id))
+    } else {
+        const finishInterval = setTimeout(appendToSongsDiv, duration*1000)
     }
 }
 
