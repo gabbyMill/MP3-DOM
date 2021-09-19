@@ -207,7 +207,9 @@ function activateSong(id) {
     }
     }
     progress()
-
+    if (getNextId(id)) {
+        const timeoutInterval = setTimeout(activateSong, duration*1000, getNextId(id))
+    }
 }
 
 function getSongDuration (id) {
@@ -232,4 +234,17 @@ function showInputs () {
         addButton.style.visibility = 'hidden'
     }
     
+}
+
+function getNextId (id) {
+    let nextId;
+    const songElements = document.querySelectorAll('.song-element')
+    for (let i = 0; i < songElements.length; i++) {
+        console.log();
+        const currentId = songElements[i].className.match(/(\d+)/)[0];
+        if (currentId == id &&
+            currentId != songElements[songElements.length-1].className.match(/(\d+)/)[0]) {
+            return nextId = songElements[i+1].className.match(/(\d+)/)[0];
+        }
+    }
 }
