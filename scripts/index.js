@@ -34,24 +34,6 @@ function durationConverter(time) {
  * @param {String} songId - the ID of the song to play
  */
 
-// ..psuedo :
-// replace playSong with setTimeout (playSong, songDuration that matches id)
-// at the end of playSong function increment index++
-// keep index like this:
-// setTimeout(func, 2500, par1, par2)
-// let tempId = null
-// const arrayOfIds = [4,5,7,6,3,2,1]
-// function testFunc (duration, id) {
-//    id
-//     setTimeout(playSong, duration, arrayOfIds[index])
-//     index++
-// }
-// let index = 0
-// function engulfingFunction (songId, duration) {
-//     index = arrayOfIds.indexOf(songId)
-//     const doesSomething = setTimeout(playSong,duration*1000, songId)
-// }
-
 function originalPlaySong(songId) {
     const resetSongs = document.querySelectorAll(".song-element")
     resetSongs.forEach((song) => {
@@ -63,7 +45,6 @@ function originalPlaySong(songId) {
             soughtSong.setAttribute("style", "background-color: rgb(96, 150, 163)")
             soughtSong.setAttribute("style", "cursor: pointer")
             soughtSong.classList.add("current-song")
-            console.log(`${song.title} is playing`);
         }
     })
     // index++
@@ -160,15 +141,6 @@ function createPlaylistElement({ id, name, songs }) {
  * @param {Array} classes - the class list of the new element
  * @param {Object} attributes - the attributes for the new element
  */
-function createElement(tagName, children = [], classes = [], attributes = {}) {
-    const element = document.createElement(tagName)
-    children.forEach((child) => element.append(child))
-    element.classList = classes.join(" ")
-    for (const attr in attributes) {
-        element.setAttribute(attr, attributes[attr])
-    }
-    return element;
-}
 
 // You can write more code below this line
 

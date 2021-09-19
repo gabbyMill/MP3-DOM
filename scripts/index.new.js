@@ -1,11 +1,6 @@
 // adding an event listener to call other functions:
 document.addEventListener('click', handleSongClickEvent);
 
-// code to help automatically play next song
-// const arrayOfSongIds = [4, 5, 7, 6, 3, 2, 1];
-// let index;
-// let interval2;
-
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -13,7 +8,7 @@ document.addEventListener('click', handleSongClickEvent);
  * @param {Number} songId - the ID of the song to play
  */
 function playSong(songId) {
-    // Your code here
+    // using activateSong
 }
 
 /**
@@ -48,16 +43,8 @@ function removeSong(id) {
 function generateNewId () {
     const arrayOfSongs = document.querySelectorAll('.song-element');
     const arrayOfIds = [];
-
     for (let song of arrayOfSongs) {
-        arrayOfIds.push(song.className[song.className.length-1])
-        if (arrayOfIds.length > 9) {
-            arrayOfIds.push((String(arrayOfIds.length)[0] * 10) + 
-            Number(song.className[song.className.length-1]))
-        }
-        // match(/(\d+)/)[0] use this.
-        // reference in line 80
-        
+        arrayOfIds.push(song.className.match(/(\d+)/)[0])
     }
     const newId = Math.max(...arrayOfIds) + 1;
     return newId
@@ -68,13 +55,7 @@ function generateNewId () {
 function addSong({id, title, album, artist, duration, coverArt }) {
     const newSong = createSongElement(arguments[0]);
     newSong.classList.add('song' + id)
-    // try calling the function each time, this way maybe it will reamin sorted.
-
     appendToSongsDiv();
-
-
-    // appendToSongsDiv() // this re appends everything.
-    // why is color off ?
 }
 
 /**
@@ -86,7 +67,6 @@ function addSong({id, title, album, artist, duration, coverArt }) {
 function handleSongClickEvent(event) {
     const removeButton = event.target.closest('.remove-button');
     const playButton = event.target.closest('.play-button');
-    const addButton = event.target.closest('.add-button') // later will add this
 
     if (removeButton)  {
         // this next line takes the id of the song:
@@ -95,9 +75,6 @@ function handleSongClickEvent(event) {
     }
     if (playButton)  {
         const id = playButton.className.match(/(\d+)/)[0];
-        // console.log(id);
-        // index = arrayOfSongIds.indexOf(+id)
-        // interval2 = setInterval(activateSong, 1000*getSongDuration(id), id)
         return activateSong(id)
     }
 }
@@ -137,22 +114,14 @@ function handleAddSongEvent(event) {
  * Creates a song DOM element based on a song object.
  */
 function createSongElement2({ id, title, album, artist, duration, coverArt }) {
-    const children = []
-    const classes = []
-    const attrs = {}
-    const eventListeners = {}
-    return createElement("div", children, classes, attrs, eventListeners)
+    // using old createSongElement function
 }
 
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
-    const children = []
-    const classes = []
-    const attrs = {}
-    const eventListeners = {}
-    return createElement("div", children, classes, attrs, eventListeners)
+    // using old createSongElement function
 }
 
 /**
@@ -168,27 +137,33 @@ function createPlaylistElement({ id, name, songs }) {
  * @param {Object} attributes - the attributes for the new element
  * @param {Object} eventListeners - the event listeners on the element
  */
-function createElement(tagName, children = [], classes = [], attributes = {}, eventListeners = {}) {
-    // Your code here
-}
 
+function createElement(tagName, children = [], classes = [], attributes = {}) {
+    const element = document.createElement(tagName)
+    children.forEach((child) => element.append(child))
+    element.classList = classes.join(" ")
+    for (const attr in attributes) {
+        element.setAttribute(attr, attributes[attr])
+    }
+    return element;
+}
 /**
  * Inserts all songs in the player as DOM elements into the songs list.
  */
 function generateSongs() {
-    // Your code here
+    /// using appendToSongsDiv
 }
 
 /**
  * Inserts all playlists in the player as DOM elements into the playlists list.
  */
 function generatePlaylists() {
-    // Your code here
+    // using appendToPlaylistsDiv
 }
 
 // Creating the page structure
-generateSongs()
-generatePlaylists()
+// generateSongs()
+// generatePlaylists()
 
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
@@ -202,25 +177,17 @@ function makeProgressBar () {
     return myProgress
 }
 
-// let tempVar;
-// const setToZero = () => tempVar = 0;
-// const timeoutSetToZero = setTimeout(setToZero, 1000 * duration) // makes
-// sure only one song can be in the progress
-// bar at a time.
+
 function activateSong(id) {
     const duration = getSongDuration(id)
-    // arrayOfSongIds.splice(index, 1) // this line only relevant for timeout
-    // id = arrayOfSongIds[index] // this line only relevant for timeout
     let tempVar = 0;
     function progress () {
     if (tempVar == 0) { 
         tempVar = 1;
         const myBar = document.querySelector(".myBar");
         if (!myBar.getAttribute("style")) {
-            console.log('something');
         }
         else {
-            console.log('something2');
             document.querySelector('.myBar').remove()
             document.body.insertBefore(makeProgressBar(), songs)
             activateSong(id)
@@ -240,10 +207,7 @@ function activateSong(id) {
     }
     }
     progress()
-    // if (!arrayOfSongIds[index]) { // this line only relevant for timeout
-    //     console.log('This is the clear interval');
-    //     clearTimeout(interval2)
-    // }
+
 }
 
 function getSongDuration (id) {
@@ -255,44 +219,6 @@ function getSongDuration (id) {
     })
     return duration
 }
-
-// there is a current-song class FYI
-// maybe keep a global variable named duration/songDuration
-// 
-// psuedo for bonus:
-// when you click a song an interval is called with the songs duration
-// something like: const interval = setInterval(activateSong, getSongDuration(id), id)
-
-// BOTTOM LINE THE 2 IMPORTANT THINGS TO DO AT END OF
-// ACTIVATESONG FUNCTION ARE
-// 1.SPLICE(INDEX, 1)
-// 2. ID = ARRAYOFSONGS[INDEX]
-// 3. BEFORE SPLICE PUT:
-// if (!arrayOfIds[index]) clearInterval(interval)
-// this will make sure it stops when it gets to the end
-
-// const arrayOfSongIds = [4, 5, 7, 6, 3, 2, 1];
-// let index; // let's say id is 7
-
-// put this code inside handleSongClickEvent:
-// index = arrayOfSongs.indexOf(id) // in that case index is 2
-// at the bottom of the function (after the splice!) this will go:
-// id = arrayOfSongs[index]
-
-
-// there will be a global variable (sorted by order)
-// arrayOfSongIds: e.g [4, 5, 7, 6, 3, 2, 1]
-// each time at the end of this function it will:
-// arrayOfSongIds.splice(index, 1) // eliminate song from array
-// this way you don't have to increment index 
-// if you eliminate 7 at index 2 now 6 is the song you want 
-// at index 2
-
-// make sure to keep index and arrayOfSongIds global vars
-
-// id = 7
-// arrayOfSongIds = [4, 5, 7, 6, 3, 2, 1]
-// let index = arrayOfSongIds.indexOf(id)
 
 document.querySelector('.click-to-add').addEventListener('click', showInputs)
 function showInputs () {
