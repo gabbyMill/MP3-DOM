@@ -208,28 +208,24 @@ function makeProgressBar () {
 // sure only one song can be in the progress
 // bar at a time.
 function activateSong(id) {
-    
-    originalPlaySong(id) // keep old playsong alive still
-    
     const duration = getSongDuration(id)
-
     // arrayOfSongIds.splice(index, 1) // this line only relevant for timeout
     // id = arrayOfSongIds[index] // this line only relevant for timeout
-
     let tempVar = 0;
-
-
     function progress () {
     if (tempVar == 0) { 
         tempVar = 1;
         const myBar = document.querySelector(".myBar");
         if (!myBar.getAttribute("style")) {
-            
+            console.log('something');
         }
         else {
+            console.log('something2');
             document.querySelector('.myBar').remove()
             document.body.insertBefore(makeProgressBar(), songs)
+            activateSong(id)
         }
+        originalPlaySong(id) // keep old playsong alive still
         let width = 1;
         const interval = setInterval(frame, 10*duration); // progress slowly incrementing
         function frame() {
