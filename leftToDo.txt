@@ -1,0 +1,8 @@
+each song is generated an id so it can be played and removed. DoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDone
+event listeners inside createElemtn functions, createSongElemnt...
+
+Time Displayed, bonus.
+Double playlists, songs header.DoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDone
+
+bonus: added songs will remain sorted by title.DoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDoneDone
+

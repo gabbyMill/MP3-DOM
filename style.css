@@ -1,1 +1,80 @@
-/* Your code here */
+/* Your code here  */
+#songs {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 100px;
+    justify-content: space-around;
+}
+
+.song-element {
+    display: flex;
+    flex-basis: 20%;
+}
+.song-element:hover {
+    color: red;
+}
+.song-element, #playlists{
+    border-radius: 30px;
+    box-shadow: 5px 10px;
+    margin: 20px;
+}
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+.remove-button, .play-button {
+    background-color: black;
+}
+.play-button {
+    background-color: mediumslateblue;
+}
+
+body {
+    text-align: center;
+    background-color: rgb(43, 122, 226);
+}
+
+li {
+    list-style-type: none;
+    color: black;
+}
+#playlists, div + h2 {
+    background-color: rgb(226, 43, 156);
+}
+.current-song {
+    background-color: blueviolet;
+}
+
+img {
+    width: 60%;
+}
+
+button {
+    /* display: flex; */
+    font-size: 150%;
+    
+}
+
+
+.myProgress {
+    width: 100%;
+    background-color: grey;
+    position: sticky;
+    top: 0;
+
+  }
+  
+.myBar {
+    width: 1%;
+    height: 30px;
+    background-color: red;
+  }
+
+  .click-to-add:hover {
+    cursor: pointer;
+  }
+
+  #inputs, #add-button {
+      visibility: hidden;
+  }

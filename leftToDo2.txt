@@ -1,0 +1,2 @@
+// automatically switches between songs not working
+// first click only pauses progress bar but doesn't automatically start next song.
